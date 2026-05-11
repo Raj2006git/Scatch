@@ -109,7 +109,7 @@ Scratch/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/your-username/scratch.git
+git clone https://github.com/Raj2006git/Scatch.git
 ```
 
 ## Navigate to Project
