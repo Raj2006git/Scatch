@@ -1,0 +1,102 @@
+<%- include('./partials/header') %>
+    <div class="w-full h-screen flex items-start px-20 py-20 gap-10">
+        <div class="flex flex-col gap-3">
+
+            <% let total=0; %>
+            <% let disc = 0; %>
+                <% user.cart.forEach(function (item) { %>
+
+                    <div class="w-[100%] rounded-md overflow-hidden flex flex-row">
+
+                        <div class="w-[16rem] flex justify-center items-center h-20 bg-[<%= item.product.bgcolor %>]">
+
+                            <img class="h-[5rem]"
+                                src="data:image/jpeg;base64,<%= item.product.image.toString('base64') %>" alt="">
+
+                        </div>
+
+                        <div class="w-full flex justify-between px-12 gap-10 py-4 bg-[<%= item.product.panelcolor %>]">
+
+                            <h3 class="text-2xl">
+                                <%= item.product.name %>
+                            </h3>
+
+                            <div class="flex items-center gap-2">
+
+                                <a href="/decrease/<%= item.product._id %>"
+                                    class="w-7 h-7 bg-white flex rounded-full items-center justify-center">
+                                    <i class="ri-subtract-line text-black"></i>
+                                </a>
+
+                                <div class="px-2 py-1 rounded-md bg-white text-black">
+                                    <%= item.quantity %>
+                                </div>
+
+                                <a href="/increase/<%= item.product._id %>"
+                                    class="w-7 h-7 bg-white flex rounded-full items-center justify-center">
+                                    <i class="ri-add-line text-black"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="flex w-[20%] text-white items-center justify-between px-5 py-3 bg-[<%= item.product.textcolor %>]">
+
+                            <h2 class="text-lg">
+                                <% let itemPrice; %>
+                                <% if (item.product.discount) { %>
+                                    <% itemPrice = item.product.price * item.quantity; %>
+                                    <% disc += item.product.discount * item.quantity %>
+                                    <s class="text-red-600">
+                                        ₹ <%= itemPrice %>
+                                    </s>
+
+                                    <p>
+                                        ₹ <%= itemPrice - (item.product.discount * item.quantity)%>
+                                    </p>
+
+                                    <% } else { %>
+                                            <% itemPrice = item.product.price * item.quantity; %>
+                                        ₹ <%= itemPrice %>
+                                            <% } %>
+                                        <% total += itemPrice; %>
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                    <% }); %>
+
+        </div>
+        <div class="w-[70%]">
+            <h3 class="text-xl">Price Breakdown</h3>
+            <div class="px-10 mt-5">
+                <div class="flex mt-2">
+                    <h4 class="w-1/3">Total MRP</h4>
+                    <h4>₹ <%= total %></h4>
+                </div>
+                <div class="flex mt-2">
+                    <h4 class="w-1/3">Discount on MRP</h4>
+                    <h4>₹ <%= disc %></h4>
+                </div>
+                <div class="flex mt-2">
+                    <h4 class="w-1/3">Platform Fee</h4>
+                    <h4>₹ 20</h4>
+                </div>
+                <div class="flex mt-2">
+                    <h4 class="w-1/3">Shipping Fee</h4>
+                    <h4>FREE</h4>
+                </div>
+            </div>
+            <div class="w-full h-[1px] bg-black mt-10"></div>
+            <div class="flex mt-5">
+                <h3 class="w-1/3 text-xl">Total Amount</h3>
+                <h3 class="font-semibold text-xl text-green-600">₹ <%= total - disc + 20 %></h3>
+            </div>
+            <form action=""></form>
+        </div>
+    </div>
+    <%- include('./partials/footer') %>
